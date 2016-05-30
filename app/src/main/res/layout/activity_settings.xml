@@ -6,115 +6,117 @@
     tools:context="com.codepath.nytimessearch.activities.SettingsActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/labelBeginDate"
         android:id="@+id/labelBeginDate"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/labelBeginDate" />
+
+    <EditText
         android:id="@+id/etBeginDate"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/labelBeginDate"
-        android:layout_toEndOf="@+id/labelBeginDate" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/labelEndDate"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/labelBeginDate"
+        android:layout_toRightOf="@+id/labelBeginDate"
+        android:ems="10"
+        android:inputType="date"
+        android:onClick="showDatePickerDialog" />
+
+    <TextView
         android:id="@+id/labelEndDate"
-        android:layout_below="@+id/etBeginDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etBeginDate"
+        android:text="@string/labelEndDate" />
 
     <EditText
+        android:id="@+id/etEndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/etEndDate"
         android:layout_below="@+id/etBeginDate"
+        android:layout_toEndOf="@+id/labelEndDate"
         android:layout_toRightOf="@+id/labelEndDate"
-        android:layout_toEndOf="@+id/labelEndDate" />
+        android:ems="10"
+        android:inputType="date"
+        android:onClick="showDatePickerDialog" />
 
     <TextView
+        android:id="@+id/labelSortOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/labelSortOrder"
-        android:id="@+id/labelSortOrder"
-        android:layout_below="@+id/etEndDate"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etEndDate"
+        android:text="@string/labelSortOrder" />
 
     <Spinner
+        android:id="@+id/spSortOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spSortOrder"
-        android:layout_below="@+id/etEndDate"
         android:layout_alignLeft="@+id/etBeginDate"
-        android:layout_alignStart="@+id/etBeginDate" />
+        android:layout_alignStart="@+id/etBeginDate"
+        android:layout_below="@+id/etEndDate" />
 
     <TextView
+        android:id="@+id/labelNewsDeskValues"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/labelNewsDeskValues"
-        android:id="@+id/labelNewsDeskValues"
-        android:layout_below="@+id/spSortOrder"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/spSortOrder"
+        android:text="@string/labelNewsDeskValues" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignTop="@+id/labelNewsDeskValues"
+        android:layout_toEndOf="@+id/labelNewsDeskValues"
         android:layout_toRightOf="@+id/labelNewsDeskValues"
-        android:layout_toEndOf="@+id/labelNewsDeskValues">
+        android:orientation="vertical">
 
         <CheckBox
+            android:id="@+id/cbArts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/news_desk_arts"
-            android:id="@+id/cbArts" />
+            android:text="@string/news_desk_arts" />
 
         <CheckBox
+            android:id="@+id/cbBusiness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/news_desk_business"
-            android:id="@+id/cbBusiness" />
+            android:text="@string/news_desk_business" />
 
         <CheckBox
+            android:id="@+id/cbFashionStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/news_desk_fashion_and_style"
-            android:id="@+id/cbFashionStyle" />
+            android:text="@string/news_desk_fashion_and_style" />
 
         <CheckBox
+            android:id="@+id/cbSports"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/news_desk_sports"
-            android:id="@+id/cbSports" />
+            android:text="@string/news_desk_sports" />
 
         <CheckBox
+            android:id="@+id/cbTechnology"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/news_desk_tech"
-            android:id="@+id/cbTechnology" />
+            android:text="@string/news_desk_tech" />
     </LinearLayout>
 
     <Button
+        android:id="@+id/btSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnSave"
-        android:id="@+id/btSave"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="onSave"/>
+        android:onClick="onSave"
+        android:text="@string/btnSave" />
 
 </RelativeLayout>

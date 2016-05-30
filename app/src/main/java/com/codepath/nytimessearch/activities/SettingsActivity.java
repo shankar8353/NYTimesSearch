@@ -1,5 +1,6 @@
 package com.codepath.nytimessearch.activities;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.codepath.nytimessearch.R;
+import com.codepath.nytimessearch.fragments.DatePickerFragment;
 import com.codepath.nytimessearch.models.NewsDesk;
 import com.codepath.nytimessearch.models.Settings;
 import com.codepath.nytimessearch.models.SortOrder;
@@ -20,6 +23,7 @@ import org.parceler.Parcels;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -93,5 +97,51 @@ public class SettingsActivity extends AppCompatActivity {
             Log.e("SettingsActivity", "Invalid date");
         }
         return null;
+    }
+
+    public void showDatePickerDialog(View v) {
+        String tag;
+        String value;
+        final EditText text;
+
+        if (v == etBeginDate) {
+            text = etBeginDate;
+            tag = "beginDate";
+            value = etBeginDate.getText().toString();
+        }
+        else {
+            text = etEndDate;
+            tag = "endDate";
+            value = etEndDate.getText().toString();
+        }
+
+        Bundle args = new Bundle();
+        Date date = parse(value);
+        if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            args.putInt("year", cal.get(Calendar.YEAR));
+            args.putInt("month", cal.get(Calendar.MONTH));
+            args.putInt("day", cal.get(Calendar.DAY_OF_MONTH));
+        }
+
+        DatePickerFragment fragment = new DatePickerFragment();
+        fragment.setListener(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                setDate(text, year, monthOfYear, dayOfMonth);
+            }
+        });
+        fragment.setArguments(args);
+        fragment.show(getSupportFragmentManager(), tag);
+    }
+
+    private void setDate(EditText text, int year, int monthOfYear, int dayOfMonth) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, monthOfYear);
+        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        Date date = cal.getTime();
+        text.setText(format(date));
     }
 }
