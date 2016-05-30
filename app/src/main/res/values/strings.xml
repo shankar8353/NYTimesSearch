@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">NYTimesSearch</string>
+    <string name="action_settings">Settings</string>
+    <string name="search">Search</string>
+    <string name="hint">Enter search query</string>
+    <string name="labelBeginDate">Begin Date</string>
+    <string name="labelEndDate">End Date</string>
+    <string name="labelSortOrder">Sort Order</string>
+    <string name="labelNewsDeskValues">News Desk Values</string>
+    <string name="news_desk_arts">Arts</string>
+    <string name="news_desk_business">Business</string>
+    <string name="news_desk_fashion_and_style"><![CDATA[Fashion & Style]]></string>
+    <string name="news_desk_sports">Sports</string>
+    <string name="news_desk_tech">Technology</string>
+    <string name="btnSave">SAVE</string>
+</resources>
