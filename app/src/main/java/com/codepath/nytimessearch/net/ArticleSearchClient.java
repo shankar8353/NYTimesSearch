@@ -46,7 +46,10 @@ public class ArticleSearchClient {
             setDateParams(params, "begin_date", settings.getBeginDate());
             setDateParams(params, "end_date", settings.getEndDate());
             setNewsDeskParams(params, settings.getEnabledNewsDesks());
+            params.put("sort", settings.getSortOrder().getOrder());
         }
+
+        activity.showProgressBar();
 
         client.get(BASE_URL, params, new TextHttpResponseHandler() {
             @Override
@@ -66,12 +69,14 @@ public class ArticleSearchClient {
                     }
                     articles.add(article);
                 }
+                activity.hideProgressBar();
                 activity.addArticles(articles);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.e("ArticleSearch", "search failed with error: " + responseString);
+                activity.hideProgressBar();
             }
 
         });

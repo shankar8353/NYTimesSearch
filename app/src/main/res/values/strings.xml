@@ -2,6 +2,7 @@
     <string name="app_name">NYTimesSearch</string>
     <string name="action_settings">Settings</string>
     <string name="search">Search</string>
+    <string name="progress_bar_title">Loading...</string>
     <string name="hint">Enter search query</string>
     <string name="labelBeginDate">Begin Date</string>
     <string name="labelEndDate">End Date</string>
