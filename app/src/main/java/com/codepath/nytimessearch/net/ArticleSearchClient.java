@@ -2,7 +2,6 @@ package com.codepath.nytimessearch.net;
 
 import android.util.Log;
 
-import com.codepath.nytimessearch.activities.SearchActivity;
 import com.codepath.nytimessearch.models.Article;
 import com.codepath.nytimessearch.models.NewsDesk;
 import com.codepath.nytimessearch.models.Settings;
@@ -29,14 +28,24 @@ public class ArticleSearchClient {
     private static final String API_KEY = "4140e249d9a048b19b951a7aca2fc42a";
 
     private AsyncHttpClient client;
-    private SearchActivity activity;
+    private SearchListener listener;
+    private String query;
+    private Settings settings;
 
-    public ArticleSearchClient(SearchActivity activity) {
-        this.activity = activity;
+    public ArticleSearchClient(SearchListener listener) {
+        this.listener = listener;
         client = new AsyncHttpClient();
     }
 
-    public void fetchPage(String query, Settings settings, int page) {
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public void settings(Settings settings) {
+        this.settings = settings;
+    }
+
+    public void fetchPage(int page) {
         RequestParams params = new RequestParams();
         params.put("api-key", API_KEY);
         params.put("q", query);
@@ -49,7 +58,7 @@ public class ArticleSearchClient {
             params.put("sort", settings.getSortOrder().getOrder());
         }
 
-        activity.showProgressBar();
+        listener.startSearch();
 
         client.get(BASE_URL, params, new TextHttpResponseHandler() {
             @Override
@@ -69,14 +78,14 @@ public class ArticleSearchClient {
                     }
                     articles.add(article);
                 }
-                activity.hideProgressBar();
-                activity.addArticles(articles);
+                listener.endSearch();
+                listener.searchResults(articles);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.e("ArticleSearch", "search failed with error: " + responseString);
-                activity.hideProgressBar();
+                listener.endSearch();
             }
 
         });
@@ -102,5 +111,13 @@ public class ArticleSearchClient {
     private String format(Date date) {
         SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
         return fmt.format(date);
+    }
+
+    public interface SearchListener {
+        void startSearch();
+
+        void endSearch();
+
+        void searchResults(List<Article> articles);
     }
 }
