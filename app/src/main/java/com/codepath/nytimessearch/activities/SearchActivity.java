@@ -3,6 +3,7 @@ package com.codepath.nytimessearch.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -21,6 +22,7 @@ import com.codepath.nytimessearch.models.Article;
 import com.codepath.nytimessearch.models.Settings;
 import com.codepath.nytimessearch.net.ArticleSearchClient;
 import com.codepath.nytimessearch.utils.EndlessRecyclerViewScrollListener;
+import com.codepath.nytimessearch.utils.SpacesItemDecoration;
 
 import org.parceler.Parcels;
 
@@ -51,6 +53,10 @@ public class SearchActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+
+        ActionBar menu = getSupportActionBar();
+        menu.setLogo(R.mipmap.ic_news);
+        menu.setDisplayUseLogoEnabled(true);
 
         settings = new Settings();
         articles = new ArrayList<>();
@@ -84,6 +90,7 @@ public class SearchActivity extends AppCompatActivity {
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
         rvArticles.setLayoutManager(layoutManager);
+        rvArticles.addItemDecoration(new SpacesItemDecoration(16));
         rvArticles.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {

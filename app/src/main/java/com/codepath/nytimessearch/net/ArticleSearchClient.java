@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -71,7 +72,8 @@ public class ArticleSearchClient {
                     article.setHeadline(doc.headline.main);
                     article.setUrl(doc.webUrl);
                     if (!doc.multimedia.isEmpty()) {
-                        String url = doc.multimedia.get(0).url;
+                        int selection = new Random().nextInt(doc.multimedia.size());
+                        String url = doc.multimedia.get(selection).url;
                         if (url != null) {
                             article.setThumbnail(IMAGE_URL + url);
                         }
