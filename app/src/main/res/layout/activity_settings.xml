@@ -126,6 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/colorPrimary"
             android:onClick="onSave"
             android:text="@string/btnSave" />
     </LinearLayout>
