@@ -94,7 +94,7 @@ public class SettingsActivity extends AppCompatActivity {
         try {
             return dateFormat.parse(value);
         } catch (ParseException e) {
-            Log.e("SettingsActivity", "Invalid date");
+            Log.e("SETTINGS", "Invalid date");
         }
         return null;
     }

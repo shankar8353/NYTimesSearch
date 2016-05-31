@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.codepath.nytimessearch.R;
 import com.codepath.nytimessearch.adapters.ArticlesAdapter;
@@ -61,6 +62,11 @@ public class SearchActivity extends AppCompatActivity {
         settings = new Settings();
         articles = new ArrayList<>();
         client = new ArticleSearchClient(new ArticleSearchClient.SearchListener() {
+            @Override
+            public void noNetwork() {
+                Toast.makeText(SearchActivity.this, "No network connection", Toast.LENGTH_SHORT).show();
+            }
+
             @Override
             public void startSearch() {
                 showProgressBar();

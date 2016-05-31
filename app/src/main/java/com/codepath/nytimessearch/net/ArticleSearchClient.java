@@ -47,6 +47,12 @@ public class ArticleSearchClient {
     }
 
     public void fetchPage(int page) {
+        // check if online before making a network request
+        if (!NetworkUtils.isOnline()) {
+            listener.noNetwork();
+            return;
+        }
+
         RequestParams params = new RequestParams();
         params.put("api-key", API_KEY);
         params.put("q", query);
@@ -86,7 +92,7 @@ public class ArticleSearchClient {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.e("ArticleSearch", "search failed with error: " + responseString);
+                Log.e("SEARCH", "Article search failed with error: " + responseString);
                 listener.endSearch();
             }
 
@@ -116,6 +122,8 @@ public class ArticleSearchClient {
     }
 
     public interface SearchListener {
+        void noNetwork();
+
         void startSearch();
 
         void endSearch();
