@@ -42,7 +42,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Implemented multiple date picker dialogs (for begin and end dates)
+* Implemented multiple date picker dialogs (for begin and end dates)
+* Show progress bars when loading more data and hide when data is loaded
 
 ## License
 
