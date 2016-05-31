@@ -21,7 +21,9 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 /**
  * Created by ssunda1 on 5/30/16.
  */
-public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHolder> {
+public class ArticlesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int NO_IMAGE = 1, WITH_IMAGE = 2;
 
     private List<Article> articles;
     private OnItemClickListener listener;
@@ -35,24 +37,45 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View articleView = inflater.inflate(R.layout.item_article_result, parent, false);
+        RecyclerView.ViewHolder viewHolder;
+        if (viewType == NO_IMAGE) {
+            View articleView = inflater.inflate(R.layout.item_article_result, parent, false);
+            viewHolder = new ViewHolder(articleView, listener);
+        }
+        else {
+            View articleView = inflater.inflate(R.layout.item_article_image_result, parent, false);
+            viewHolder = new ViewHolderImage(articleView, listener);
+        }
 
-        // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(articleView, listener);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Article article = articles.get(position);
-        Picasso.with(holder.ivThumbnail.getContext()).load(article.getThumbnail()).
-                transform(new RoundedCornersTransformation(10, 10)).into(holder.ivThumbnail);
-        holder.tvHeadline.setText(article.getHeadline());
+        if (holder.getItemViewType() == NO_IMAGE) {
+            ViewHolder holderNoImage = (ViewHolder) holder;
+            holderNoImage.tvHeadline.setText(article.getHeadline());
+        }
+        else {
+            ViewHolderImage holderImage = (ViewHolderImage) holder;
+            Picasso.with(holderImage.ivThumbnail.getContext()).load(article.getThumbnail()).
+                    transform(new RoundedCornersTransformation(10, 10)).into(holderImage.ivThumbnail);
+            holderImage.tvHeadline.setText(article.getHeadline());
+        }
+
+
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Article article = articles.get(position);
+        return article.getThumbnail() == null ? NO_IMAGE : WITH_IMAGE;
     }
 
     @Override
@@ -66,10 +89,32 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.ivThumbnail) ImageView ivThumbnail;
         @BindView(R.id.tvHeadline) TextView tvHeadline;
 
         public ViewHolder(final View itemView, final OnItemClickListener listener) {
+            super(itemView);
+
+            ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Triggers click upwards to the adapter on click
+                    if (listener != null) {
+                        listener.onItemClick(itemView, getLayoutPosition());
+                    }
+                }
+            });
+        }
+
+    }
+
+    public static class ViewHolderImage extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.ivThumbnail) ImageView ivThumbnail;
+        @BindView(R.id.tvHeadline) TextView tvHeadline;
+
+        public ViewHolderImage(final View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             ButterKnife.bind(this, itemView);
